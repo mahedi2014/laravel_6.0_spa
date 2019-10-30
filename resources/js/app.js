@@ -8,10 +8,12 @@ import axios from 'axios';
 import {routes} from './routes';
 import Vuex from 'vuex';
 import local from './lib/local';
+import req from './lib/requester';
 
 Vue.use(VueRouter);
 
 Vue.use(VueAxios, axios);
+Vue.prototype.req = req;
 
 const router = new VueRouter({
     mode: 'history',

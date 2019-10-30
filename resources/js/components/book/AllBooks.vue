@@ -34,6 +34,7 @@
 </template>
 
 <script>
+    // import req from '../../lib/requester';
     export default {
         data() {
             return {
@@ -41,8 +42,7 @@
             }
         },
         created() {
-            this.axios
-                .get('http://localhost:8080/api/books')
+            this.req.callApi('GET', '/books')
                 .then(response => {
                     this.books = response.data;
                 });
@@ -50,7 +50,7 @@
         methods: {
             deleteBook(id) {
                 this.axios
-                    .delete(`http://localhost:8080/api/book/delete/${id}`)
+                    .delete('http://localhost:8080/api/book/delete/${id}')
                     .then(response => {
                         let i = this.books.map(item => item.id).indexOf(id); // find index of your object
                         this.books.splice(i, 1)
