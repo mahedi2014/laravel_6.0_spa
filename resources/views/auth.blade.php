@@ -20,6 +20,7 @@
 
 </head>
 <body>
+<h2>Auth</h2>
 <div id="app"></div>
 
 <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
