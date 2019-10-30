@@ -1,5 +1,4 @@
-const mix = require('laravel-mix')
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+const mix = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -13,30 +12,7 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
  */
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/styles/app.sass', 'public/css')
-    .copy('resources/img', 'public/img').version();
+    .sass('resources/sass/app.scss', 'public/css')
+    .copy('resources/img', 'public/img')
+    .version();
 
-mix.webpackConfig({
-  resolve: {
-    extensions: ['.js', '.json', '.vue'],
-    alias: {
-      '~': path.join(__dirname, './resources/js'),
-      '$comp': path.join(__dirname, './resources/js/components')
-    }
-  },
-  plugins: [
-    new VuetifyLoaderPlugin()
-  ],
-  module: {
-    rules: [{
-      test: /\.js?$/,
-      exclude: /(bower_components)/,
-      use: [{
-        loader: 'babel-loader',
-        options: mix.config.babel()
-      }]
-    }]
-  }
-})
-
-mix.browserSync(process.env.APP_URL)

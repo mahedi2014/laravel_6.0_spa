@@ -1,15 +1,32 @@
-import 'babel-polyfill'
-import Vue from 'vue'
+require('./bootstrap');
+window.Vue = require('vue');
 
-import router from '~/router/index'
-import store from '~/store/index'
-import App from '$comp/App'
-import '~/plugins/index'
-import vuetify from '~/plugins/vuetify'
+import App from './App.vue';
+import VueRouter from 'vue-router';
+import VueAxios from 'vue-axios';
+import axios from 'axios';
+import {routes} from './routes';
+import Vuex from 'vuex';
+import local from './lib/local';
 
-export const app = new Vue({
-  router,
-  store,
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+Vue.use(VueRouter);
+
+Vue.use(VueAxios, axios);
+
+const router = new VueRouter({
+    mode: 'history',
+    routes: routes
+});
+
+const app = new Vue({
+    el: '#app',
+    router: router,
+    render: h => h(App),
+});
+/*Vue.prototype.$axios = axios;
+const token = local.getStorage('_token');
+if (token) {
+    Vue.prototype.$axios.defaults.headers.common['Authorization'] = "Bearer "+token;
+}
+Vue.use(Vuex);*/
+
