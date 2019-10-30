@@ -14,6 +14,10 @@ export default {
             return await  axios.post(url, params, headers)
                 .then(response => {return response;})
 
+        } else if(methodName === 'DELETE' ) {
+            return await  axios.delete(url)
+                .then(response => {return response;})
+                .catch(error => { return error;});
 
         } else{
             console.log('Invalid request method');

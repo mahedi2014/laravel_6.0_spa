@@ -2003,7 +2003,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-// import req from '../../lib/requester';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2021,11 +2020,10 @@ __webpack_require__.r(__webpack_exports__);
     deleteBook: function deleteBook(id) {
       var _this2 = this;
 
-      this.axios["delete"]('http://localhost:8080/api/book/delete/${id}').then(function (response) {
+      this.req.callApi('DELETE', '/book/delete/' + id).then(function (response) {
         var i = _this2.books.map(function (item) {
           return item.id;
-        }).indexOf(id); // find index of your object
-
+        }).indexOf(id);
 
         _this2.books.splice(i, 1);
       });
@@ -54956,10 +54954,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _context.abrupt("return", _context.sent);
 
             case 19:
+              if (!(methodName === 'DELETE')) {
+                _context.next = 25;
+                break;
+              }
+
+              _context.next = 22;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](url).then(function (response) {
+                return response;
+              })["catch"](function (error) {
+                return error;
+              });
+
+            case 22:
+              return _context.abrupt("return", _context.sent);
+
+            case 25:
               console.log('Invalid request method');
               return _context.abrupt("return", false);
 
-            case 21:
+            case 27:
             case "end":
               return _context.stop();
           }

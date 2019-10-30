@@ -34,7 +34,6 @@
 </template>
 
 <script>
-    // import req from '../../lib/requester';
     export default {
         data() {
             return {
@@ -49,10 +48,9 @@
         },
         methods: {
             deleteBook(id) {
-                this.axios
-                    .delete('http://localhost:8080/api/book/delete/${id}')
+                this.req.callApi('DELETE', '/book/delete/'+id)
                     .then(response => {
-                        let i = this.books.map(item => item.id).indexOf(id); // find index of your object
+                        let i = this.books.map(item => item.id).indexOf(id);
                         this.books.splice(i, 1)
                     });
             }
