@@ -54049,8 +54049,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! F:\server\laratest\laravel-vue-crud-spa\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! F:\server\laratest\laravel-vue-crud-spa\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! F:\server\laratest\laravel_6.0_spa\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! F:\server\laratest\laravel_6.0_spa\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
