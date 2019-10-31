@@ -70,6 +70,7 @@
             },
             getImagePreviews(){
                 for( let i = 0; i < this.files.length; i++ ){
+
                     if ( /\.(jpe?g|png|gif)$/i.test( this.files[i].name ) ) {
                         let reader = new FileReader();
                         reader.addEventListener("load", function(){
