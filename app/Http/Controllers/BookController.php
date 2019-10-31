@@ -66,7 +66,7 @@ class BookController extends Controller
 
         $path = hash( 'sha256', time());
 
-        if(Storage::disk('uploads')->put($path.'/'.$filename,  $file)) {
+        if(Storage::disk('uploads')->put($filename,  $file)) {
             $input['filename'] = $filename;
             $input['mime'] = $file->getClientMimeType();
             $input['path'] = $path;

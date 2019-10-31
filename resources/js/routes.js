@@ -1,7 +1,7 @@
 import AllBooks from './components/book/AllBooks.vue';
 import AddBook from './components/book/AddBook.vue';
 import EditBook from './components/book/EditBook.vue';
-import UploadBook from './components/book/UploadBook.vue';
+import UploadFile from './components/file/UploadFile.vue';
 import AllUsers from './components/auth/AllUsers.vue';
 
 export const routes = [
@@ -21,15 +21,16 @@ export const routes = [
         component: EditBook
     },
     {
-        name: 'upload',
-        path: '/book/upload',
-        component: UploadBook,
-    },
-    {
         name: 'home',
         path: '/auth/',
         component: AllUsers,
-    }
+    },
+    {
+        name: 'file-upload',
+        path: '/file/upload',
+        component: UploadFile,
+    },
+
 ];
 
 

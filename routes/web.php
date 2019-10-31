@@ -26,5 +26,13 @@ Route::get('auth/{any}', function () {
     return view('auth');
 })->where('any', '.*');
 
+Route::get('file', function () {
+    echo 'this is auth home page';
+    return;
+});
+Route::get('file/{any}', function () {
+    return view('file');
+})->where('any', '.*');
+
 
 

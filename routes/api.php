@@ -15,3 +15,8 @@ Route::group(['prefix' => 'book'], function () {
     Route::get('/files', 'BookController@fileList');
     Route::post('/upload', 'BookController@uploadFile');
 });
+
+Route::group(['prefix' => 'file'], function () {
+    Route::get('/', 'FileController@index');
+    Route::post('/add', 'FileController@add');
+});
