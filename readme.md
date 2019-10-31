@@ -10,3 +10,7 @@ Using Laravel and Vue.js, we are going to create a single page application. We w
 You can download the project, modify the code and use it anywhere you want without re-posting on any blog. Happy Coding :)
 
 Thank you.
+
+
+https://blog.usejournal.com/file-upload-with-laravel-and-vuejs-a70ae85e34a1
+

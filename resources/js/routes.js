@@ -1,6 +1,7 @@
 import AllBooks from './components/book/AllBooks.vue';
 import AddBook from './components/book/AddBook.vue';
 import EditBook from './components/book/EditBook.vue';
+import UploadBook from './components/book/UploadBook.vue';
 import AllUsers from './components/auth/AllUsers.vue';
 
 export const routes = [
@@ -18,6 +19,11 @@ export const routes = [
         name: 'edit',
         path: '/book/edit/:id',
         component: EditBook
+    },
+    {
+        name: 'upload',
+        path: '/book/upload',
+        component: UploadBook,
     },
     {
         name: 'home',

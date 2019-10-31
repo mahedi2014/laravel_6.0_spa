@@ -12,4 +12,6 @@ Route::group(['prefix' => 'book'], function () {
     Route::get('/edit/{id}', 'BookController@edit');
     Route::put('/update/{id}', 'BookController@update');
     Route::delete('/delete/{id}', 'BookController@delete');
+    Route::get('/files', 'BookController@fileList');
+    Route::post('/upload', 'BookController@uploadFile');
 });
