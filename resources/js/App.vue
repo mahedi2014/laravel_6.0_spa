@@ -5,7 +5,7 @@
                 <div class="navbar-nav">
                     <router-link to="/book" class="nav-item nav-link">Home</router-link>
                     <router-link to="/book/add" class="nav-item nav-link">Add</router-link>
-                    <router-link to="/book/upload" class="nav-item nav-link">Upload</router-link>
+                    <router-link to="/file/upload" class="nav-item nav-link">Upload</router-link>
                 </div>
             </div>
         </nav>

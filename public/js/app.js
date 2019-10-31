@@ -38963,7 +38963,7 @@ var render = function() {
                   "router-link",
                   {
                     staticClass: "nav-item nav-link",
-                    attrs: { to: "/book/upload" }
+                    attrs: { to: "/file/upload" }
                   },
                   [_vm._v("Upload")]
                 )
