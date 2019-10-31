@@ -2212,7 +2212,7 @@ __webpack_require__.r(__webpack_exports__);
         var formData = new FormData();
         formData.append('file', _this3.files[i]);
 
-        _this3.axios.post('/api/file/add', formData, {
+        _this3.axioClient.post('/file/add', formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -2220,9 +2220,6 @@ __webpack_require__.r(__webpack_exports__);
           this.files[i].id = data['data']['id'];
           this.files.splice(i, 1, this.files[i]);
           console.log('success');
-          this.$router.push({
-            name: 'file-upload'
-          });
         }.bind(_this3))["catch"](function (data) {
           console.log('error');
         });

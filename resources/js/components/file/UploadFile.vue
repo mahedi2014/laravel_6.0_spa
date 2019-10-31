@@ -96,18 +96,11 @@
                     let formData = new FormData();
                     formData.append('file', this.files[i]);
 
-                    this.axios.post('/api/file/add',
-                        formData,
-                        {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        }
+                    this.axioClient.post('/file/add', formData,{headers: {'Content-Type': 'multipart/form-data'}}
                     ).then(function(data) {
                         this.files[i].id = data['data']['id'];
                         this.files.splice(i, 1, this.files[i]);
                         console.log('success');
-                        this.$router.push({name: 'file-upload'});
                     }.bind(this)).catch(function(data) {
                         console.log('error');
                     });
