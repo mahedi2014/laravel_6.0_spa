@@ -1943,11 +1943,12 @@ __webpack_require__.r(__webpack_exports__);
     addBook: function addBook() {
       var _this = this;
 
-      this.axios.post('http://localhost:8080/api/book/add', this.book).then(function (response) {
-        return _this.$router.push({
+      this.axioClient.post('/book/add', this.book).then(function (response) {
+        _this.$router.push({
           name: 'home'
-        }) // console.log(response.data)
-        ;
+        });
+
+        console.log(response.data);
       })["catch"](function (error) {
         return console.log(error);
       })["finally"](function () {
@@ -2012,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    this.req.callApi('GET', '/books').then(function (response) {
+    this.axioClient.get('/book').then(function (response) {
       _this.books = response.data;
     });
   },
@@ -2020,7 +2021,8 @@ __webpack_require__.r(__webpack_exports__);
     deleteBook: function deleteBook(id) {
       var _this2 = this;
 
-      this.req.callApi('DELETE', '/book/delete/' + id).then(function (response) {
+      console.log(id);
+      this.axioClient["delete"]('/book/delete/' + id).then(function (response) {
         var i = _this2.books.map(function (item) {
           return item.id;
         }).indexOf(id);
@@ -2069,18 +2071,21 @@ __webpack_require__.r(__webpack_exports__);
       book: {}
     };
   },
-  created: function created() {
-    var _this = this;
-
-    this.axios.get("http://localhost:8080/api/book/edit/".concat(this.$route.params.id)).then(function (response) {
-      _this.book = response.data; // console.log(response.data);
-    });
+  mounted: function mounted() {
+    this.getBook();
   },
   methods: {
+    getBook: function getBook() {
+      var _this = this;
+
+      this.axioClient.get('/book/edit/' + this.$route.params.id).then(function (response) {
+        _this.book = response.data;
+      });
+    },
     updateBook: function updateBook() {
       var _this2 = this;
 
-      this.axios.post("http://localhost:8080/api/book/update/".concat(this.$route.params.id), this.book).then(function (response) {
+      this.axioClient.put('/book/update/' + this.$route.params.id, this.book).then(function (response) {
         _this2.$router.push({
           name: 'home'
         });
@@ -38153,14 +38158,17 @@ var render = function() {
               [
                 _c(
                   "router-link",
-                  { staticClass: "nav-item nav-link", attrs: { to: "/" } },
+                  { staticClass: "nav-item nav-link", attrs: { to: "/book" } },
                   [_vm._v("Home")]
                 ),
                 _vm._v(" "),
                 _c(
                   "router-link",
-                  { staticClass: "nav-item nav-link", attrs: { to: "/add" } },
-                  [_vm._v("Add Book")]
+                  {
+                    staticClass: "nav-item nav-link",
+                    attrs: { to: "/book/add" }
+                  },
+                  [_vm._v("Add")]
                 )
               ],
               1
@@ -38297,7 +38305,7 @@ var render = function() {
             _c(
               "button",
               { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-              [_vm._v("Add Book")]
+              [_vm._v("Add")]
             )
           ]
         )
@@ -38328,7 +38336,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", { staticClass: "text-center" }, [_vm._v("All Books")]),
+    _c("h3", { staticClass: "text-center" }, [_vm._v("All Data")]),
     _c("br"),
     _vm._v(" "),
     _c("table", { staticClass: "table table-bordered" }, [
@@ -38429,7 +38437,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h3", { staticClass: "text-center" }, [_vm._v("Edit Book")]),
+    _c("h3", { staticClass: "text-center" }, [_vm._v("Edit")]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-6" }, [
@@ -54455,7 +54463,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _lib_local__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./lib/local */ "./resources/js/lib/local.js");
-/* harmony import */ var _lib_requester__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/requester */ "./resources/js/lib/requester.js");
+/* harmony import */ var _lib_axioClient__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./lib/axioClient */ "./resources/js/lib/axioClient.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
@@ -54469,7 +54477,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 Vue.use(vue_axios__WEBPACK_IMPORTED_MODULE_2___default.a, axios__WEBPACK_IMPORTED_MODULE_3___default.a);
-Vue.prototype.req = _lib_requester__WEBPACK_IMPORTED_MODULE_7__["default"];
+Vue.prototype.axioClient = _lib_axioClient__WEBPACK_IMPORTED_MODULE_7__["default"];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: 'history',
   routes: _routes__WEBPACK_IMPORTED_MODULE_4__["routes"]
@@ -54824,6 +54832,180 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/lib/axioClient.js":
+/*!****************************************!*\
+  !*** ./resources/js/lib/axioClient.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  apiBasePath: '/api',
+  get: function () {
+    var _get = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var url,
+          params,
+          headers,
+          _args = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              url = _args.length > 0 && _args[0] !== undefined ? _args[0] : '';
+              params = _args.length > 1 && _args[1] !== undefined ? _args[1] : {};
+              headers = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
+              _context.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(this.apiBasePath + url, headers).then(function (response) {
+                return response;
+              })["catch"](function (error) {
+                return error;
+              });
+
+            case 5:
+              return _context.abrupt("return", _context.sent);
+
+            case 6:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, this);
+    }));
+
+    function get() {
+      return _get.apply(this, arguments);
+    }
+
+    return get;
+  }(),
+  post: function () {
+    var _post = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      var url,
+          params,
+          headers,
+          _args2 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              url = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : '';
+              params = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : {};
+              headers = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : {};
+              _context2.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(this.apiBasePath + url, params, headers).then(function (response) {
+                return response;
+              });
+
+            case 5:
+              return _context2.abrupt("return", _context2.sent);
+
+            case 6:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, this);
+    }));
+
+    function post() {
+      return _post.apply(this, arguments);
+    }
+
+    return post;
+  }(),
+  put: function () {
+    var _put = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      var url,
+          params,
+          headers,
+          _args3 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              url = _args3.length > 0 && _args3[0] !== undefined ? _args3[0] : '';
+              params = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
+              headers = _args3.length > 2 && _args3[2] !== undefined ? _args3[2] : {};
+              _context3.next = 5;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.put(this.apiBasePath + url, params, headers).then(function (response) {
+                return response;
+              });
+
+            case 5:
+              return _context3.abrupt("return", _context3.sent);
+
+            case 6:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this);
+    }));
+
+    function put() {
+      return _put.apply(this, arguments);
+    }
+
+    return put;
+  }(),
+  "delete": function () {
+    var _delete2 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var url,
+          _args4 = arguments;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              url = _args4.length > 0 && _args4[0] !== undefined ? _args4[0] : '';
+              _context4.next = 3;
+              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](this.apiBasePath + url).then(function (response) {
+                return response;
+              })["catch"](function (error) {
+                return error;
+              });
+
+            case 3:
+              return _context4.abrupt("return", _context4.sent);
+
+            case 4:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, this);
+    }));
+
+    function _delete() {
+      return _delete2.apply(this, arguments);
+    }
+
+    return _delete;
+  }()
+});
+
+/***/ }),
+
 /***/ "./resources/js/lib/local.js":
 /*!***********************************!*\
   !*** ./resources/js/lib/local.js ***!
@@ -54875,118 +55057,6 @@ __webpack_require__.r(__webpack_exports__);
       return null;
     }
   }
-});
-
-/***/ }),
-
-/***/ "./resources/js/lib/requester.js":
-/*!***************************************!*\
-  !*** ./resources/js/lib/requester.js ***!
-  \***************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  apiBasePath: '/api',
-  callApi: function () {
-    var _callApi = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var requestType,
-          url,
-          params,
-          headers,
-          showLoader,
-          methodName,
-          _args = arguments;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              requestType = _args.length > 0 && _args[0] !== undefined ? _args[0] : 'GET';
-              url = _args.length > 1 && _args[1] !== undefined ? _args[1] : '';
-              params = _args.length > 2 && _args[2] !== undefined ? _args[2] : {};
-              headers = _args.length > 3 && _args[3] !== undefined ? _args[3] : {};
-              showLoader = _args.length > 4 && _args[4] !== undefined ? _args[4] : false;
-              url = this.apiBasePath + url;
-              methodName = requestType.toUpperCase();
-
-              if (!(methodName === 'GET')) {
-                _context.next = 13;
-                break;
-              }
-
-              _context.next = 10;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url, params, headers).then(function (response) {
-                return response;
-              })["catch"](function (error) {
-                return error;
-              });
-
-            case 10:
-              return _context.abrupt("return", _context.sent);
-
-            case 13:
-              if (!(methodName === 'POST')) {
-                _context.next = 19;
-                break;
-              }
-
-              _context.next = 16;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a.post(url, params, headers).then(function (response) {
-                return response;
-              });
-
-            case 16:
-              return _context.abrupt("return", _context.sent);
-
-            case 19:
-              if (!(methodName === 'DELETE')) {
-                _context.next = 25;
-                break;
-              }
-
-              _context.next = 22;
-              return axios__WEBPACK_IMPORTED_MODULE_1___default.a["delete"](url).then(function (response) {
-                return response;
-              })["catch"](function (error) {
-                return error;
-              });
-
-            case 22:
-              return _context.abrupt("return", _context.sent);
-
-            case 25:
-              console.log('Invalid request method');
-              return _context.abrupt("return", false);
-
-            case 27:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, this);
-    }));
-
-    function callApi() {
-      return _callApi.apply(this, arguments);
-    }
-
-    return callApi;
-  }()
 });
 
 /***/ }),

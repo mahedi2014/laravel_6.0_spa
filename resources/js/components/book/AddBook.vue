@@ -12,7 +12,7 @@
                         <label>Author</label>
                         <input type="text" class="form-control" v-model="book.author">
                     </div>
-                    <button type="submit" class="btn btn-primary">Add Book</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
                 </form>
             </div>
         </div>
@@ -28,15 +28,13 @@
         },
         methods: {
             addBook() {
-
-                this.axios
-                    .post('http://localhost:8080/api/book/add', this.book)
-                    .then(response => (
-                        this.$router.push({name: 'home'})
-                        // console.log(response.data)
-                    ))
+                this.axioClient.post('/book/add', this.book)
+                    .then(response => {
+                        this.$router.push({name: 'home'});
+                        console.log(response.data);
+                    })
                     .catch(error => console.log(error))
-                    .finally(() => this.loading = false)
+                    .finally(() => this.loading = false);
             }
         }
     }

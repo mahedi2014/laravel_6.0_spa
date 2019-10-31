@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-center">Edit Book</h3>
+        <h3 class="text-center">Edit</h3>
         <div class="row">
             <div class="col-md-6">
                 <form @submit.prevent="updateBook">
@@ -26,19 +26,19 @@
                 book: {}
             }
         },
-        created() {
-            this.axios
-                .get(`http://localhost:8080/api/book/edit/${this.$route.params.id}`)
-                .then((response) => {
-                    this.book = response.data;
-                    // console.log(response.data);
-                });
+        mounted(){
+            this.getBook();
         },
         methods: {
+            getBook() {
+                this.axioClient.get('/book/edit/'+this.$route.params.id)
+                    .then(response => {
+                        this.book = response.data;
+                    });
+            },
             updateBook() {
-                this.axios
-                    .post(`http://localhost:8080/api/book/update/${this.$route.params.id}`, this.book)
-                    .then((response) => {
+                this.axioClient.put('/book/update/'+this.$route.params.id, this.book)
+                    .then(response => {
                         this.$router.push({name: 'home'});
                     });
             }

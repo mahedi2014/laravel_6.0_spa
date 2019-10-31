@@ -20,9 +20,7 @@
 
 </head>
 <body>
-<h2>book</h2>
 <div id="app"></div>
-
 <script src="{{ mix('js/app.js') }}" type="text/javascript" defer></script>
 </body>
 </html>

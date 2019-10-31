@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3 class="text-center">All Books</h3><br/>
+        <h3 class="text-center">All Data</h3><br/>
 
         <table class="table table-bordered">
             <thead>
@@ -41,14 +41,15 @@
             }
         },
         created() {
-            this.req.callApi('GET', '/books')
+            this.axioClient.get('/book')
                 .then(response => {
                     this.books = response.data;
                 });
         },
         methods: {
             deleteBook(id) {
-                this.req.callApi('DELETE', '/book/delete/'+id)
+                console.log(id)
+                this.axioClient.delete('/book/delete/'+id)
                     .then(response => {
                         let i = this.books.map(item => item.id).indexOf(id);
                         this.books.splice(i, 1)
