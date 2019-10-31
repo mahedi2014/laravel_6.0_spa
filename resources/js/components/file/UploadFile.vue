@@ -96,12 +96,12 @@
                     let formData = new FormData();
                     formData.append('file', this.files[i]);
 
-                    this.axioClient.post('/file/add', formData,{headers: {'Content-Type': 'multipart/form-data'}}
-                    ).then(function(data) {
-                        this.files[i].id = data['data']['id'];
-                        this.files.splice(i, 1, this.files[i]);
-                        console.log('success');
-                    }.bind(this)).catch(function(data) {
+                    this.axioClient.post('/file/add', formData,{headers: {'Content-Type': 'multipart/form-data'}})
+                        .then(function(data) {
+                            this.files[i].id = data['data']['id'];
+                            this.files.splice(i, 1, this.files[i]);
+                            console.log('success');
+                        }.bind(this)).catch(function(data) {
                         console.log('error');
                     });
                 }
